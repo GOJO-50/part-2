@@ -1,18 +1,27 @@
 import React from 'react'
 
 const Course = ({course}) =>{
+  let cou = course.map(course => 
+  <div key={course.id}>
+  <Header course = {course.name}/>
+  <Content parts = {course.parts}/>
+  <Total parts = {course.parts}/>
+  </div>
+    )
+
 return(
   <>
-   <Header course = {course.name} />
-   <Content parts = {course.parts} />
-   <Total parts = {course.parts}/>
+   {cou}
   </>
 )
 }
+
 const Header = ({course}) => {
     return(
    <>
-   <h1>{course}</h1>
+   <h1>
+     {course}
+  </h1>
    </>
   )
   }
@@ -26,10 +35,9 @@ const Header = ({course}) => {
   }
 
   const Content = ({parts}) => {
-
     let part = parts.map(part =>
        <p key={part.id}> 
-    <Part part={part.name}  exercise={part.exercises}/> 
+          <Part part={part.name}  exercise={part.exercises}/>
        </p>)
 
     return(
@@ -40,12 +48,9 @@ const Header = ({course}) => {
   }
     const Total = ({parts}) => {
       
-      let loop= parts.map(part => part.exercises)
+      let loop = parts.map(part => part.exercises)
 
-    const total = loop.reduce((s, p) => {
-    console.log('Whats happening ', s,p)
-    return s + p
-  })
+    const total = loop.reduce((s, p) => s + p)
 
    
       return(
@@ -56,10 +61,10 @@ const Header = ({course}) => {
     }
 
 const App = () => {
-  const course = { 
-
+  const course = [
+  { 
   name:'Half Stack application development',
-    
+  id: 1,
   parts: [
     {
       id: 1,
@@ -81,8 +86,25 @@ const App = () => {
         exercises: 11},
    
   ]
+},
+{
+  name: 'Node.js',
+  id: 2,
+  parts: [
+    {
+      name: 'Routing',
+      exercises: 3,
+      id: 1
+    },
+    {
+      name: 'Middlewares',
+      exercises: 7,
+      id: 2
+    }
+  ]
 }
-  
+]  
+
   return(
   <>
   <Course course = {course}/>
