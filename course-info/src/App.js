@@ -39,9 +39,15 @@ const Header = ({course}) => {
     )
   }
     const Total = ({parts}) => {
+      
+      let loop= parts.map(part => part.exercises)
+
+    const total = loop.reduce((s, p) => s + p)
+
+   
       return(
         <>
-        <p>Number of exercise </p>
+        <strong>Number of exercise {total}</strong>
         </>
       )
     }
@@ -64,7 +70,12 @@ const App = () => {
     {
       id: 3,
       name:'State of a component',
-      exercises: 14}
+      exercises: 14},
+    
+      {
+        id: 4,
+        name:'Redux',
+        exercises: 11},
    
   ]
 }
