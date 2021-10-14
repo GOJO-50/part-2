@@ -42,7 +42,10 @@ const Header = ({course}) => {
       
       let loop= parts.map(part => part.exercises)
 
-    const total = loop.reduce((s, p) => s + p)
+    const total = loop.reduce((s, p) => {
+    console.log('Whats happening ', s,p)
+    return s + p
+  })
 
    
       return(
