@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Person from './Components/Persons'
 import PersonForm from './Components/PersonForm'
 import axios from 'axios'
+import personService from './services/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -9,25 +10,22 @@ const App = () => {
   const [newNumber, setNewNumber] = useState(0)
 
   useEffect(()=>{
-    console.log('effect')
-    axios
-    .get('http://localhost:3001/persons')
+    personService
+    .getAll()
     .then(response => {
-      console.log('promise fulfilled')
       setPersons(response.data)
     })
   }, [])
-  console.log('render', persons.length,'notes');
 
+  
+  
   const addNote = (event) =>{
     event.preventDefault()
     const personObject = {
       name: newName,
       number: newNumber,
-      date: new Date(),
-      important: Math.random() > 0.5,
-    }
-
+    }  
+      
     const checkName = persons.filter(person => newName.toUpperCase() === person.name.toUpperCase())
     const checkNumber = persons.filter(persona => newNumber === persona.number)
    
@@ -38,13 +36,12 @@ const App = () => {
       alert(`${newNumber} is already added to phonebook`)
     }
     else{      
-     axios
-     .post('http://localhost:3001/persons', personObject)
-     .then(response =>{
-      setPersons(persons.concat(response.data))
-      setNewName('')
-      setNewNumber('')
-     })
+      personService
+      .create(personObject)
+      .then(response => 
+        setPersons(persons.concat(response.data)))
+        setNewName('')
+        setNewNumber('')
     }
   }
 
