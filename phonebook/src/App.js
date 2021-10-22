@@ -21,6 +21,13 @@ const App = () => {
 
   const addNote = (event) =>{
     event.preventDefault()
+    const personObject = {
+      name: newName,
+      number: newNumber,
+      date: new Date(),
+      important: Math.random() > 0.5,
+    }
+
     const checkName = persons.filter(person => newName.toUpperCase() === person.name.toUpperCase())
     const checkNumber = persons.filter(persona => newNumber === persona.number)
    
@@ -30,10 +37,14 @@ const App = () => {
     else if(checkNumber[0] !== undefined){
       alert(`${newNumber} is already added to phonebook`)
     }
-    else{
-      setPersons(persons.concat({name: newName, number: newNumber, id: persons.length + 1}))
+    else{      
+     axios
+     .post('http://localhost:3001/persons', personObject)
+     .then(response =>{
+      setPersons(persons.concat(response.data))
       setNewName('')
       setNewNumber('')
+     })
     }
   }
 
