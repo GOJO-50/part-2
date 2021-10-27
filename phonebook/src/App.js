@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Person from './Components/Persons'
 import PersonForm from './Components/PersonForm'
-import axios from 'axios'
 import personService from './services/persons'
 
 const App = () => {
@@ -12,12 +11,10 @@ const App = () => {
   useEffect(()=>{
     personService
     .getAll()
-    .then(response => {
-      setPersons(response.data)
+    .then(initialPerson => {
+      setPersons(initialPerson)
     })
   }, [])
-
-  
   
   const addNote = (event) =>{
     event.preventDefault()
@@ -25,7 +22,6 @@ const App = () => {
       name: newName,
       number: newNumber,
     }  
-      
     const checkName = persons.filter(person => newName.toUpperCase() === person.name.toUpperCase())
     const checkNumber = persons.filter(persona => newNumber === persona.number)
    
@@ -53,6 +49,11 @@ const App = () => {
     console.log(event.target.value)
     setNewNumber(event.target.value)
   }
+  const clear = (name, id) => {
+    if (window.confirm(`Are you sure ${name}`)){
+      personService.remove(id)
+    }
+  }
 
      return (
     <div>
@@ -62,7 +63,7 @@ const App = () => {
      <PersonForm addNote={addNote} newName={newName} newNumber={newNumber} handleName={handleName} handleNumber={handleNumber}/>
 
       <h2>Numbers</h2>
-       <Person persons={persons}/>
+       <Person persons={persons} clear={clear}/>
     </div>
   )
 }
