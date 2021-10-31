@@ -1,6 +1,4 @@
-
-
-const Person = ({persons, clear}) => {
+const Persons = ({persons, clear}) => {
     let person = persons.map(person => <p key={person.id}>{person.name} {person.number} 
     <button onClick= {() => clear(person.name, person.id)}>Delete</button>
     </p>)
@@ -11,4 +9,4 @@ const Person = ({persons, clear}) => {
     </div>
    )
 }
-export default Person
+export default Persons
