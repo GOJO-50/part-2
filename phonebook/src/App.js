@@ -5,11 +5,20 @@ import personService from './services/persons'
 import Notification from './Components/Notifications'
 import "./index.css"
 
+const Filter = ({value, onChange}) => {
+  return (
+    <div>
+      filter shown with: <input value={value} onChange={onChange} />
+    </div>
+  )
+}
+
 const App = () => {
   const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState(0)
   const [successMessage, setSuccessMessage] = useState(null)
+  const [filter, setFilter] = useState('')
 
   useEffect(()=>{
     personService
@@ -59,23 +68,35 @@ const App = () => {
     setNewNumber(event.target.value)
   }
   const clear = (name, id) => {
-    if (window.confirm(`Are you sure ${name}`)){
+    if (window.confirm(`Are you sure you want to delete ${name}?`)){
       personService
       .remove(id)
       .then(response=> response.data)
     }
+    window.location.reload(false)
+  }
+
+  const handleFilter = (event) => {
+    console.log(event.target.value)
+    setFilter(event.target.value)
   }
 
 
      return (
-    <div>
+    <div className= "body">
       <h2>Phonebook</h2>
-      <Notification message={successMessage}/>
+
+      <Filter value ={filter} onChange={handleFilter}/>
+     
+     <Notification message={successMessage}/>
+
       <h3>Add a new</h3>
+
      <PersonForm add={addPerson} newName={newName} newNumber={newNumber} handleName={handleName} handleNumber={handleNumber}/>
 
       <h2>Numbers</h2>
-       <Persons persons={persons} clear={clear}/>
+      <Persons persons={persons} clear={clear} filter={filter}/>
+
     </div>
   )
 }

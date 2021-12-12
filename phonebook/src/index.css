@@ -7,3 +7,24 @@
     padding: 10px;
     margin-bottom: 10px;
   }
+  h2 {
+    color: blue;
+  }
+.del:hover{
+  color: red;
+}
+ 
+.submit:hover{
+  color: white;
+  background-color: black;
+  border-radius: 20%;
+  -webkit-border-radius: 20%;
+  -moz-border-radius: 20%;
+  -ms-border-radius: 20%;
+  -o-border-radius: 20%;
+}
+.body{
+  background-color:turquoise;
+  max-width: 50%;
+  padding:  5px 7px; 
+}
