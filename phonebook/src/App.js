@@ -4,14 +4,7 @@ import PersonForm from './Components/PersonForm'
 import personService from './services/persons'
 import Notification from './Components/Notifications'
 import "./index.css"
-
-const Filter = ({value, onChange}) => {
-  return (
-    <div>
-      filter shown with: <input value={value} onChange={onChange} />
-    </div>
-  )
-}
+import Filter from './Components/Filter'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -34,7 +27,6 @@ const App = () => {
       name: newName,
       number: newNumber,
     }  
-
     const checkName = persons.filter(person => newName.toUpperCase() === person.name.toUpperCase())
     const checkNumber = persons.filter(persona => newNumber === persona.number)
    
@@ -56,8 +48,9 @@ const App = () => {
         setTimeout(()=> {
           setSuccessMessage(null)}, 2000)
     }
-    
+
   }
+
 
   const handleName = (event) => {
     console.log(event.target.value)
